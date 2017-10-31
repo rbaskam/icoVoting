@@ -77,12 +77,12 @@ $( document ).ready(function() {
 
   Voting.deployed().then(function (contractInstance) {
     contractInstance.getIcoCount.call().then(function (v) {
-      console.log(v)
-      icoCount = v
+      console.log(v['c'][0])
+      icoCount = v['c'][0] - 1
     })
   })
 
-  for (var i = 0; i < 4; i++) {
+  for (var i = 0; i < icoCount; i++) {
     console.log(i)
     Voting.deployed().then(function (contractInstance) {
       contractInstance.getIco.call(i).then(function (v) {
