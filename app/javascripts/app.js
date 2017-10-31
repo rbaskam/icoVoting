@@ -77,18 +77,16 @@ $( document ).ready(function() {
 
   Voting.deployed().then(function (contractInstance) {
     contractInstance.getIcoCount.call().then(function (v) {
-      console.log(v['c'][0])
       icoCount = v['c'][0] - 1
+
+      for (var i = 0; i < icoCount; i++) {
+        contractInstance.getIco.call(i).then(function (v) {
+          console.log(v);
+          $("#icoList > tbody").append("<tr><td>"+v[0]+"</td><td>"+v[1]+"</td></tr>");
+        });
+      }
     })
   })
 
-  for (var i = 0; i < icoCount; i++) {
-    console.log(i)
-    Voting.deployed().then(function (contractInstance) {
-      contractInstance.getIco.call(i).then(function (v) {
-        console.log(v);
-        $("#icoList > tbody").append("<tr><td>"+v[0]+"</td><td>"+v[1]+"</td></tr>");
-      });
-    })
-  }
+  
 });
