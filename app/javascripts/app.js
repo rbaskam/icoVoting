@@ -51,10 +51,12 @@ window.voteForIco = function(ico) {
      * everywhere we have a transaction call
      */
     Voting.deployed().then(function(contractInstance) {
-      console.log(ico)
+      
       contractInstance.voteForIco(ico, {gas: 140000, from: web3.eth.accounts[0]}).then(function(v) {
         let div_id = 'ico-' + ico
-        $("#" + div_id).html(v);
+        var oldValue = $("#" + div_id).html();
+        var newValue = parseInt(oldValue) + parseInt(1);
+        $("#" + div_id).html(newValue);
         $("#msg").html("");
       });
     });
