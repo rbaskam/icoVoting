@@ -82,9 +82,9 @@ $( document ).ready(function() {
     })
   })
 
-  for (var i = 0; i < icoCount; i++) {
+  for (var i = 0; i < 2; i++) {
     Voting.deployed().then(function (contractInstance) {
-      contractInstance.getIcoItem.call(i).then(function (v) {
+      contractInstance.getIco.call(i).then(function (v) {
         console.log(v);
         $("#icoList > tbody").append("<tr><td>"+v+"</td><td>"+v+"</td></tr>");
       });
