@@ -23,4 +23,9 @@ contract Voting {
         return ( users[index].name, users[index].votes);
     }
 
+    function voteForIco(uint icoId) public returns(uint) {
+      users[icoId].votes++;
+      return users[icoId].votes;
+    }
+
 }

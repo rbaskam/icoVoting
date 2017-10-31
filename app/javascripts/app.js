@@ -42,7 +42,6 @@ window.addIco = function(ico) {
 }
 
 window.voteForIco = function(ico) {
-  let icoName = $("#ico").val();
   try {
     $("#msg").html("Vote has been submitted. The vote count will increment as soon as the vote is recorded on the blockchain. Please wait.")
     $("#ico").val("");
@@ -52,12 +51,11 @@ window.voteForIco = function(ico) {
      * everywhere we have a transaction call
      */
     Voting.deployed().then(function(contractInstance) {
-      contractInstance.voteForIco(icoName, {gas: 140000, from: web3.eth.accounts[0]}).then(function() {
-        let div_id = icos[icoName];
-        return contractInstance.totalVotesFor.call(icoName).then(function(v) {
-          $("#" + div_id).html(v.toString());
-          $("#msg").html("");
-        });
+      console.log(ico)
+      contractInstance.voteForIco(ico, {gas: 140000, from: web3.eth.accounts[0]}).then(function() {
+        let div_id = 'ico-' + ico
+        $("#" + div_id).html(v);
+        $("#msg").html("");
       });
     });
   } catch (err) {
@@ -77,16 +75,14 @@ $( document ).ready(function() {
 
   Voting.deployed().then(function (contractInstance) {
     contractInstance.getIcoCount.call().then(function (v) {
-      icoCount = v['c'][0] - 1
+      icoCount = v['c'][0]
 
       for (var i = 0; i < icoCount; i++) {
         contractInstance.getIco.call(i).then(function (v) {
           console.log(v);
-          $("#icoList > tbody").append("<tr><td>"+v[0]+"</td><td>"+v[1]+"</td></tr>");
-        });
+          $("#icoList > tbody").append("<tr><td>" + v[0] + "</td><td id='ico-" + i + "'>" + v[1]['c'][0] + "</td><td><a href='#' onclick='voteForIco(" + i + ")' class='btn btn-primary'>Vote</a></td></tr>")
+        })
       }
     })
   })
-
-  
-});
+})
