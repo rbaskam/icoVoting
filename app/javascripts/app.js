@@ -19,12 +19,12 @@ import voting_artifacts from '../../build/contracts/Voting.json'
 
 var Voting = contract(voting_artifacts);
 
-let icos = {"Rama": "ico-1", "Nick": "ico-2", "Jose": "ico-3"}
+let icos = {}
 
 window.addIco = function(ico) {
   let icoName = $("#ico").val();
   try {
-    $("#msg").html("ICO has been submitted. The ICO will dispaly as soon as it is recorded on the blockchain. Please wait.")
+    $("#msg").html("ICO has been submitted. The ICO will display as soon as it is recorded on the blockchain. Please wait.")
     $("#ico").val("");
 
     /* Voting.deployed() returns an instance of the contract. Every call
@@ -33,11 +33,7 @@ window.addIco = function(ico) {
      */
     Voting.deployed().then(function(contractInstance) {
       contractInstance.addIco(icoName, {gas: 140000, from: web3.eth.accounts[0]}).then(function() {
-        let div_id = icos[icoName];
-        return contractInstance.totalVotesFor.call(icoName).then(function(v) {
-          $("#" + div_id).html(v.toString());
-          $("#msg").html("");
-        });
+        $("#icoList > tbody").append("<tr><td>"+icoName+"</td><td>0</td></tr>");
       });
     });
   } catch (err) {
@@ -70,19 +66,27 @@ window.voteForIco = function(ico) {
 }
 
 $( document ).ready(function() {
+  let icoCount = 0
+
   if (typeof web3 !== 'undefined') {
     console.warn("Using web3 detected from external source like Metamask")
     // Use Mist/MetaMask's provider
     window.web3 = new Web3(web3.currentProvider);
   }
+  Voting.setProvider(web3.currentProvider)
 
-  Voting.setProvider(web3.currentProvider);
-  let icoNames = Object.keys(icos);
-  for (var i = 0; i < icoNames.length; i++) {
-    let name = icoNames[i];
-    Voting.deployed().then(function(contractInstance) {
-      contractInstance.totalVotesFor.call(name).then(function(v) {
-        $("#" + icos[name]).html(v.toString());
+  Voting.deployed().then(function (contractInstance) {
+    contractInstance.getIcoCount.call().then(function (v) {
+      console.log(v)
+      icoCount = v
+    })
+  })
+
+  for (var i = 0; i < icoCount; i++) {
+    Voting.deployed().then(function (contractInstance) {
+      contractInstance.getIcoItem.call(i).then(function (v) {
+        console.log(v);
+        $("#icoList > tbody").append("<tr><td>"+v+"</td><td>"+v+"</td></tr>");
       });
     })
   }

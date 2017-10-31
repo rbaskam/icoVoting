@@ -6,54 +6,46 @@ contract Voting {
   The key of the mapping is ico name stored as type bytes32 and value is
   an unsigned integer to store the vote count
   */
+  // mapping (bytes32 => uint8) public icoList;
+
+ string public icoListNames;
+
+  struct IcoList {
+        string name;
+        uint8 votes;
+    }
+    IcoList[] public icos;
+
   
-  mapping (bytes32 => uint8) public votesReceived;
-  
-  /* Solidity doesn't let you pass in an array of strings in the constructor (yet).
-  We will use an array of bytes32 instead to store the list of icos
-  */
-  
-  bytes32[] public icoList;
+   
 
   /* This is the constructor which will be called once when you
-  deploy the contract to the blockchain. When we deploy the contract,
-  we will pass an array of icos who will be contesting in the election
+  deploy the contract to the blockchain. When we deploy the contract
   */
-  function Voting(bytes32[] icoNames) {
-    icoList = icoNames;
-  }
+  // function Voting() {}
 
-  // This function returns the total votes a ico has received so far
-  function totalVotesFor(bytes32 ico) returns (uint8) {
-    if (validIco(ico) == false) throw;
-    return votesReceived[ico];
-  }
+  // This function returns the list of icos
+  function getIcoItem(uint index) returns(uint, string) {
+        return (icos[index].votes, icos[index].name);
+    }
 
-  // This function increments the vote count for the specified ico. This
-  // is equivalent to casting a vote
-  function voteForIco(bytes32 ico) {
-    if (validIco(ico) == false) throw;
-    votesReceived[ico] += 1;
+  // This function returns the list of icos
+  function getIcoCount() returns(uint) {
+  
+    for (uint i = 0; i < 10; i++) {
+      string icoName = icos[i].name;
+      uint8 icoVotes = icos[i].votes;
+       icoListNames = icoListNames . (icoName.icoVotes+',');
+    }
+
+    return icoListNames.length;
   }
 
   // This function adds the specified ico. This
   // is equivalent to adding a ico
-  function addIco(bytes32 ico) {
-    if (validIcoAdd(ico) == false) throw;
-    uint icoCount = icoList.length + 1;
-    icoList[icoCount] = ico;
-  }
-
-  function validIcoAdd(bytes32 ico) returns (bool) {
-    return true;
-  }
-
-  function validIco(bytes32 ico) returns (bool) {
-    for(uint i = 0; i < icoList.length; i++) {
-      if (icoList[i] == ico) {
-        return true;
-      }
-    }
-    return false;
+  function addIco(string _icoName) {
+    var icoLength = icos.length++;
+    icos[icoLength].votes = 0;
+    icos[icoLength].name = _icoName;
   }
 }
