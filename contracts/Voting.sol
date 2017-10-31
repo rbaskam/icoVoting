@@ -19,8 +19,8 @@ contract Voting {
         return users.length;
     }
 
-    function getIco(uint index) public constant returns(string, uint) {
-        return ( users[index].name, users[index].votes);
+    function getIco(uint index) public constant returns(string, uint, uint) {
+        return ( users[index].name, users[index].votes, index);
     }
 
     function voteForIco(uint icoId) public returns(uint) {

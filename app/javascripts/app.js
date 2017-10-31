@@ -52,7 +52,7 @@ window.voteForIco = function(ico) {
      */
     Voting.deployed().then(function(contractInstance) {
       console.log(ico)
-      contractInstance.voteForIco(ico, {gas: 140000, from: web3.eth.accounts[0]}).then(function() {
+      contractInstance.voteForIco(ico, {gas: 140000, from: web3.eth.accounts[0]}).then(function(v) {
         let div_id = 'ico-' + ico
         $("#" + div_id).html(v);
         $("#msg").html("");
@@ -80,7 +80,7 @@ $( document ).ready(function() {
       for (var i = 0; i < icoCount; i++) {
         contractInstance.getIco.call(i).then(function (v) {
           console.log(v);
-          $("#icoList > tbody").append("<tr><td>" + v[0] + "</td><td id='ico-" + i + "'>" + v[1]['c'][0] + "</td><td><a href='#' onclick='voteForIco(" + i + ")' class='btn btn-primary'>Vote</a></td></tr>")
+          $("#icoList > tbody").append("<tr><td>" + v[0] + "</td><td id='ico-" + v[2]['c'][0]  + "'>" + v[1]['c'][0] + "</td><td><a href='#' onclick='voteForIco(" + v[2]['c'][0]  + ")' class='btn btn-primary'>Vote</a></td></tr>")
         })
       }
     })
