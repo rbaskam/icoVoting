@@ -2,36 +2,25 @@ pragma solidity ^0.4.11;
 // We have to specify what version of compiler this code will compile with
 
 contract Voting {
-
-    struct Ico {
+    struct User {
         string name;
         uint votes;
     }
+    User[] public users;
 
-    uint numIcos;
-    mapping (uint => Ico) icos;
-
-    Ico[] public proposals;
-
-    function addIco(string name) returns (uint icoID) {
-        icoID = numIcos++; // icoID is return variable
-        // Creates new struct and saves in storage. We leave out the mapping type.
-        icos[icoID] = Ico(name, 0);
-    }
-
-    function voteForIco(uint icoID) {
-        Ico storage c = icos[icoID];
-        // Creates a new temporary memory struct, initialised with the given values
-        // and copies it over to storage.
-        // Note that you can also use Voter(msg.sender, msg.value) to initialise.
-        c.votes++;
+    function addIco(string _name) public returns(uint) {
+        users.length++;
+        users[users.length-1].name = _name;
+        users[users.length-1].votes = 0;
+        return users.length;
     }
 
     function getIcoCount() public constant returns(uint) {
-        return proposals.length;
+        return users.length;
     }
 
     function getIco(uint index) public constant returns(string, uint) {
-        return (proposals[index].name, proposals[index].votes);
+        return ( users[index].name, users[index].votes);
     }
+
 }

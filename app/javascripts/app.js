@@ -82,11 +82,12 @@ $( document ).ready(function() {
     })
   })
 
-  for (var i = 0; i < 2; i++) {
+  for (var i = 0; i < 4; i++) {
+    console.log(i)
     Voting.deployed().then(function (contractInstance) {
       contractInstance.getIco.call(i).then(function (v) {
         console.log(v);
-        $("#icoList > tbody").append("<tr><td>"+v+"</td><td>"+v+"</td></tr>");
+        $("#icoList > tbody").append("<tr><td>"+v[0]+"</td><td>"+v[1]+"</td></tr>");
       });
     })
   }
