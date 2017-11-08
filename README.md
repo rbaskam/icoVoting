@@ -6,3 +6,6 @@ Example ICO Voting system to test how Dapps are constructed.
 * truffle console
 * web3.personal.unlockAccount('0xcab50f85b92a6519335513873583ca33bb5b60a9', '[enter password]', 15000)
 * truffle migrate --reset
+
+Live Link
+https://gateway.ipfs.io/ipfs/QmTDgwEzywSLXq1A55JYev5ns4r9u1A2vjyvpMgu1rmbip/#
