@@ -78,10 +78,9 @@ $( document ).ready(function() {
   Voting.deployed().then(function (contractInstance) {
     contractInstance.getIcoCount.call().then(function (v) {
       icoCount = v['c'][0]
-
+      
       for (var i = 0; i < icoCount; i++) {
         contractInstance.getIco.call(i).then(function (v) {
-          console.log(v);
           $("#icoList > tbody").append("<tr><td>" + v[0] + "</td><td id='ico-" + v[2]['c'][0]  + "'>" + v[1]['c'][0] + "</td><td><a href='#' onclick='voteForIco(" + v[2]['c'][0]  + ")' class='btn btn-primary'>Vote</a></td></tr>")
         })
       }
