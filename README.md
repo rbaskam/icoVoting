@@ -8,4 +8,5 @@ Example ICO Voting system to test how Dapps are constructed.
 * truffle migrate --reset
 
 Live Link
+https://hackernoon.com/learn-web-3-0-by-actually-deploying-an-application-on-it-hands-on-approach-9141ad88588f
 https://gateway.ipfs.io/ipfs/QmTDgwEzywSLXq1A55JYev5ns4r9u1A2vjyvpMgu1rmbip/#
